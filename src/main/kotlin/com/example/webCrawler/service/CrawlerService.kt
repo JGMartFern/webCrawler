@@ -30,4 +30,18 @@ class CrawlerService {
 
         return entries.take(30)
     }
+
+    fun filterByTitleLengthAndComments(entries: List<Entry>): List<Entry> {
+        return entries.filter { it.title.wordCount() > 5 }
+            .sortedByDescending { it.comments }
+    }
+
+    fun filterByTitleLengthAndPoints(entries: List<Entry>): List<Entry> {
+        return entries.filter { it.title.wordCount() <= 5 }
+            .sortedByDescending { it.points }
+    }
+
+    private fun String.wordCount(): Int {
+        return this.split("\\s+".toRegex()).count { it.matches("\\w+".toRegex()) }
+    }
 }

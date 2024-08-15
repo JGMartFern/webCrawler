@@ -9,6 +9,8 @@ import java.io.IOException
 
 class CrawlerServiceTest {
 
+    val service = CrawlerService()
+
     @Test
     fun `should fetch and parse entries correctly`() {
         val html = """
@@ -41,8 +43,6 @@ class CrawlerServiceTest {
     """.trimIndent()
 
         val doc = Jsoup.parse(html)
-        println(doc)
-        val service = CrawlerService()
         val entries = service.parseEntries(doc)
 
         assertEquals(2, entries.size)
@@ -52,10 +52,42 @@ class CrawlerServiceTest {
 
     @Test
     fun `should throw exception if it could not obtain any data`() {
-        val service = CrawlerService()
 
         assertThrows<IOException> {
             service.fetchEntries("https://invalid.url")
         }
+    }
+
+    @Test
+    fun `should filter entries with more than 5 words in the title and sort by comments`() {
+        val entries = listOf(
+            Entry(1, "This is a short title *", 50, 100),
+            Entry(2, "A much longer title that definitely has more than five words", 30, 200),
+            Entry(3, "Short again - - - -", 20, 150),
+            Entry(4, "Another title that exceeds five words easily", 40, 300)
+        )
+
+        val result = service.filterByTitleLengthAndComments(entries)
+
+        assertEquals(2, result.size)
+        assertEquals(Entry(4, "Another title that exceeds five words easily", 40, 300), result[0])
+        assertEquals(Entry(2, "A much longer title that definitely has more than five words", 30, 200), result[1])
+    }
+
+    @Test
+    fun `should filter entries with 5 or fewer words in the title and sort by points`() {
+        val entries = listOf(
+            Entry(1, "This is short", 100, 50),
+            Entry(2, "This is a bit longer", 150, 30),
+            Entry(3, "Short title", 200, 75),
+            Entry(4, "Very short title totally made up", 50, 40)
+        )
+
+        val result = service.filterByTitleLengthAndPoints(entries)
+
+        assertEquals(3, result.size)
+        assertEquals(Entry(3, "Short title", 200, 75), result[0])
+        assertEquals(Entry(2, "This is a bit longer", 150, 30), result[1])
+        assertEquals(Entry(1, "This is short", 100, 50), result[2])
     }
 }
