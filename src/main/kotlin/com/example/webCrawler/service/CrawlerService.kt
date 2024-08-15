@@ -3,8 +3,10 @@ package com.example.webCrawler.service
 import com.example.webCrawler.model.Entry
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import org.springframework.stereotype.Service
 import java.io.IOException
 
+@Service
 class CrawlerService {
 
     @Throws(IOException::class)
