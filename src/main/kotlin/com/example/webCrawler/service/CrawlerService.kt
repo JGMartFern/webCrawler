@@ -20,12 +20,15 @@ class CrawlerService {
         val rows = doc.select("tr.athing")
 
         for (row in rows) {
-            val number = row.selectFirst("span.rank")?.text()?.replace(".", "")?.toInt() ?: continue
-            val title = row.selectFirst("td.title > a")?.text() ?: continue
-            val points =
-                row.nextElementSibling()?.selectFirst("span.score")?.text()?.replace(" points", "")?.toInt() ?: 0
-            val comments =
-                row.nextElementSibling()?.select("a")?.last()?.text()?.replace(" comments", "")?.toIntOrNull() ?: 0
+            val number = row.selectFirst(".rank")?.text()?.replace(".", "")?.toIntOrNull() ?: continue
+            val title = row.selectFirst(".titleline > a")?.text() ?: continue
+
+            val subtextRow = row.nextElementSibling()
+            val pointsElement = subtextRow?.selectFirst(".score")
+            val commentsElement = subtextRow?.select("a")?.last()
+
+            val points = pointsElement?.text()?.replace(" points", "")?.toInt() ?: 0
+            val comments = commentsElement?.text()?.replace(" comments", "")?.toIntOrNull() ?: 0
 
             entries.add(Entry(number, title, points, comments))
         }

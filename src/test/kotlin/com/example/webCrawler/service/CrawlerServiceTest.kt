@@ -14,40 +14,46 @@ class CrawlerServiceTest {
     @Test
     fun `should fetch and parse entries correctly`() {
         val html = """
-        <table>
-            <tr class='athing'>
-                <td class='title'><span class='rank'>1.</span></td>
-                <td class='title'><a href=''>Title 1</a></td>
-            </tr>
-            <tr>
-                <td class='subtext'>
-                    <span>
-                        <span class='score'>100 points</span>
-                        <a href=''>50 comments</a>
-                    </span>
-                </td>
-            </tr>
-            <tr class='athing'>
-                <td class='title'><span class='rank'>2.</span></td>
-                <td class='title'><a href=''>Title 2</a></td>
-            </tr>
-            <tr>
-                <td class='subtext'>
-                    <span>
-                        <span class='score'>150 points</span>
-                        <a href=''>75 comments</a>
-                    </span>
-                </td>
-            </tr>
-        </table>
+    <table>
+        <tr class='athing' id='41255456'>
+            <td align="right" valign="top" class="title"><span class="rank">1.</span></td>
+            <td valign="top" class="votelinks"><center><a id='up_41255456' href='vote?id=41255456&amp;how=up&amp;goto=news'><div class='votearrow' title='upvote'></div></a></center></td>
+            <td class="title"><span class="titleline"><a href="https://golem.ph.utexas.edu/category/2024/08/galois_theory.html">Galois Theory</a><span class="sitebit comhead"> (<a href="from?site=utexas.edu"><span class="sitestr">utexas.edu</span></a>)</span></span></td>
+        </tr>
+        <tr>
+            <td colspan="2"></td>
+            <td class="subtext">
+                <span class="subline">
+                    <span class="score" id="score_41255456">173 points</span> by <a href="user?id=mathgenius" class="hnuser">mathgenius</a>
+                    <span class="age" title="2024-08-15T13:00:48"><a href="item?id=41255456">5 hours ago</a></span>
+                    <span id="unv_41255456"></span> | <a href="hide?id=41255456&amp;goto=news">hide</a> | <a href="item?id=41255456">81&nbsp;comments</a>
+                </span>
+            </td>
+        </tr>
+        <tr class='athing' id='41257369'>
+            <td align="right" valign="top" class="title"><span class="rank">2.</span></td>
+            <td valign="top" class="votelinks"><center><a id='up_41257369' href='vote?id=41257369&amp;how=up&amp;goto=news'><div class='votearrow' title='upvote'></div></a></center></td>
+            <td class="title"><span class="titleline"><a href="item?id=41257369">Launch HN: Hamming (YC S24) – Automated Testing for Voice Agents</a></span></td>
+        </tr>
+        <tr>
+            <td colspan="2"></td>
+            <td class="subtext">
+                <span class="subline">
+                    <span class="score" id="score_41257369">34 points</span> by <a href="user?id=sumanyusharma" class="hnuser">sumanyusharma</a>
+                    <span class="age" title="2024-08-15T15:44:53"><a href="item?id=41257369">2 hours ago</a></span>
+                    <span id="unv_41257369"></span> | <a href="hide?id=41257369&amp;goto=news">hide</a> | <a href="item?id=41257369">15&nbsp;comments</a>
+                </span>
+            </td>
+        </tr>
+    </table>
     """.trimIndent()
 
         val doc = Jsoup.parse(html)
         val entries = service.parseEntries(doc)
 
         assertEquals(2, entries.size)
-        assertEquals(Entry(1, "Title 1", 100, 50), entries[0])
-        assertEquals(Entry(2, "Title 2", 150, 75), entries[1])
+        assertEquals(Entry(1, "Galois Theory", 173, 81), entries[0])
+        assertEquals(Entry(2, "Launch HN: Hamming (YC S24) – Automated Testing for Voice Agents", 34, 15), entries[1])
     }
 
     @Test
