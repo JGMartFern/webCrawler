@@ -52,7 +52,7 @@ class CrawlerControllerTest {
         val filteredEntries = listOf(mockEntries[0])
 
         `when`(crawlerService.parseEntries(any())).thenReturn(mockEntries)
-        `when`(crawlerService.filterByTitleLengthAndComments(mockEntries)).thenReturn(filteredEntries)
+        `when`(crawlerService.filterByLongTitleAndComments(mockEntries)).thenReturn(filteredEntries)
 
         mockMvc.perform(get("/api/crawler/filter/long-titles")
             .param("url", "http://example.com"))
@@ -72,7 +72,7 @@ class CrawlerControllerTest {
         val filteredEntries = listOf(mockEntries[1])
 
         `when`(crawlerService.parseEntries(any())).thenReturn(mockEntries)
-        `when`(crawlerService.filterByTitleLengthAndPoints(mockEntries)).thenReturn(filteredEntries)
+        `when`(crawlerService.filterByShortTitleAndPoints(mockEntries)).thenReturn(filteredEntries)
 
         mockMvc.perform(get("/api/crawler/filter/short-titles")
             .param("url", "http://example.com"))

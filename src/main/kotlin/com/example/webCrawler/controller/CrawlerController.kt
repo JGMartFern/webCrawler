@@ -22,13 +22,13 @@ class CrawlerController(private val crawlerService: CrawlerService) {
     fun getFilteredEntriesWithLongTitles(@RequestParam url: String = defaultUrl): List<Entry> {
         val document = Jsoup.connect(url).get()
         val entries = crawlerService.parseEntries(document)
-        return crawlerService.filterByTitleLengthAndComments(entries)
+        return crawlerService.filterByLongTitleAndComments(entries)
     }
 
     @GetMapping("/api/crawler/filter/short-titles")
     fun getFilteredEntriesWithShortTitles(@RequestParam url: String = defaultUrl): List<Entry> {
         val document = Jsoup.connect(url).get()
         val entries = crawlerService.parseEntries(document)
-        return crawlerService.filterByTitleLengthAndPoints(entries)
+        return crawlerService.filterByShortTitleAndPoints(entries)
     }
 }

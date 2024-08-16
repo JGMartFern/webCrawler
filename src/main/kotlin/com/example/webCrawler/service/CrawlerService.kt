@@ -36,12 +36,12 @@ class CrawlerService {
         return entries.take(30)
     }
 
-    fun filterByTitleLengthAndComments(entries: List<Entry>): List<Entry> {
+    fun filterByLongTitleAndComments(entries: List<Entry>): List<Entry> {
         return entries.filter { it.title.wordCount() > 5 }
             .sortedByDescending { it.comments }
     }
 
-    fun filterByTitleLengthAndPoints(entries: List<Entry>): List<Entry> {
+    fun filterByShortTitleAndPoints(entries: List<Entry>): List<Entry> {
         return entries.filter { it.title.wordCount() <= 5 }
             .sortedByDescending { it.points }
     }

@@ -73,7 +73,7 @@ class CrawlerServiceTest {
             Entry(4, "Another title that exceeds five words easily", 40, 300)
         )
 
-        val result = service.filterByTitleLengthAndComments(entries)
+        val result = service.filterByLongTitleAndComments(entries)
 
         assertEquals(2, result.size)
         assertEquals(Entry(4, "Another title that exceeds five words easily", 40, 300), result[0])
@@ -89,7 +89,7 @@ class CrawlerServiceTest {
             Entry(4, "Very short title totally made up", 50, 40)
         )
 
-        val result = service.filterByTitleLengthAndPoints(entries)
+        val result = service.filterByShortTitleAndPoints(entries)
 
         assertEquals(3, result.size)
         assertEquals(Entry(3, "Short title", 200, 75), result[0])
