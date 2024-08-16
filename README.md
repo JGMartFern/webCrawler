@@ -12,8 +12,12 @@ structure is like that of Hacker News, or adapt our CrawlerService and its tests
 - **Tools:** Gradle
 
 ## Project Structure
+- **`model/Entry.kt`**: Model for showing the data we fetch and parse.
+- **`model/EntryTest.kt`**: Unit tests for checking correct functioning of the model.
 - **`service/CrawlerService.kt`**: Main web crawler logic.
 - **`service/CrawlerServiceTest.kt`**: Unit tests to verify the scraping functionality.
+- **`controller/CrawlerController.kt`**: Configuration for our GET requests so they show what we want and how we want.
+- **`controller/CrawlerControllerTest.kt`**: Unit tests mocking some content and checking our use of the controller.
 
 ## How It Works
 The service uses Jsoup to parse HTML, selecting and extracting the relevant data: number, title, points, and comments.
@@ -27,6 +31,7 @@ The service uses Jsoup to parse HTML, selecting and extracting the relevant data
 - Support for dynamic HTML using Selenium.
 - Further optimization of selectors to improve parsing efficiency and flexibility, making it adaptable to other
 websites.
+- Create more tests other than those that follow the happy path
 
 ## Author
 - **Juan Gabriel Martinez**
