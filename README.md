@@ -19,13 +19,20 @@ structure is like that of Hacker News, or adapt our CrawlerService and its tests
 - **`controller/CrawlerController.kt`**: Configuration for our GET requests so they show what we want and how we want.
 - **`controller/CrawlerControllerTest.kt`**: Unit tests mocking some content and checking our use of the controller.
 
-## How It Works
-The service uses Jsoup to parse HTML, selecting and extracting the relevant data: number, title, points, and comments.
-
 ## Installation
 1. Clone the repository.
 2. Run `gradle build` to build the project.
 3. Run `gradle test` to execute the unit tests.
+4. With the project open, right click on WebCrawlerApplication.kt and click on Run to start the application.
+5. Once the application is running, you can use this url in your browser: http://localhost:8080/api/crawler/all. It will
+provide us the first 30 entries from https://news.ycombinator.com/
+6. Alternatively, we can use http://localhost:8080/api/crawler/filter/long-titles. It will filter all previous entries
+with more than five words in the title ordered by the number of comments first.
+7. As a third option, http://localhost:8080/api/crawler/filter/short-titles will filter all entries from the point 5 
+with less than or equal to five words in the title ordered by points.
+
+## How It Works
+The service uses Jsoup to parse HTML, selecting and extracting the relevant data: number, title, points, and comments.
 
 ## Future Improvements
 - Support for dynamic HTML using Selenium.
